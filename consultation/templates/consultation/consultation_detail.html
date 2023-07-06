@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    
+
 
 
     <!-- Shop Detail Start -->
@@ -11,9 +11,9 @@
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner bg-light">
                         <div class="carousel-item active">
-                            <img class="w-100 h-100" src="{% static ' img/hotma.jpg' %}" alt="Image">
+                            <img class="w-100 h-100" src="{{ consultation.lawyer.image.url }}" alt="Image">
                         </div>
-                        
+
                     </div>
                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                         <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -26,52 +26,43 @@
 
             <div class="col-lg-7 h-auto mb-30">
                 <div class="h-100 bg-light p-30">
-                    <h3>Abdian Wijaya, S.H., M.H.</h3>
-                    <div class="d-flex mb-3">
-                        <div class="text-primary mr-2">
-                            <small class="fas fa-star"></small>
-                            <small class="fas fa-star"></small>
-                            <small class="fas fa-star"></small>
-                            <small class="fas fa-star-half-alt"></small>
-                            <small class="far fa-star"></small>
+                        <h3>{{ consultation.lawyer.name }}.</h3>
+                        <div class="d-flex mb-3">
+                            <div class="text-primary mr-2">
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star"></small>
+                                <small class="fas fa-star-half-alt"></small>
+                                <small class="far fa-star"></small>
+                            </div>
                         </div>
-                    </div>
-                    <h3 class="font-weight-semi-bold mb-4">Rp 50.000</h3>
-                    <p class="mb-4">Pidana umum - Perjanjian - Perkawinan - Perindustrian</p>
-                    <div class="d-flex mb-3">
-                        <strong class="text-dark mr-3">Type		:</strong>
-                        <form>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="size-1" name="size">
-                                <label class="custom-control-label" for="size-1">Chat</label>
+
+                        <form id="variation-form" method="post" action="{% url "consultation:book-consultation" consultation.id %}">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label for="type" class="text-dark mr-3 font-weight-bold">Type:</label>
+                                <select id="type" name="type" class="form-control">
+                                    <option value="">Select Type</option>
+                                    {% for type, durations in options.items %}
+                                        <option value="{{ type }}">{{ type }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="size-2" name="size">
-                                <label class="custom-control-label" for="size-2">Phone</label>
+
+                            <div class="form-group">
+                                <label for="duration" class="text-dark mr-3 font-weight-bold">Duration:</label>
+                                <select id="duration" name="duration" class="form-control" disabled>
+                                    <option value="">Select Duration</option>
+                                </select>
                             </div>
+
+                            <h3 id="price-container" class="font-weight-semi-bold mb-4 mt3"></h3>
+
+                            <button type="submit" id="book-btn" class="btn btn-primary" disabled>Book Consultation</button>
                         </form>
-                    </div>
-                    <div class="d-flex mb-4">
-                        <strong class="text-dark mr-3">Duration:</strong>
-                        <form>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="color-1" name="color">
-                                <label class="custom-control-label" for="color-1">15 Menit</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="color-2" name="color">
-                                <label class="custom-control-label" for="color-2">30 Menit</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="color-3" name="color">
-                                <label class="custom-control-label" for="color-3">1 Jam</label>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="d-flex align-items-center mb-4 pt-2">
-                        <a href="cart.html" class="btn btn-primary">Order</a>
-                    </div>
-                    
+
+
                 </div>
             </div>
         </div>
@@ -86,38 +77,12 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="tab-pane-1">
                             <h4 class="mb-3">Description</h4>
-                            <p>Abdian Wijaya, S.H., M.H., adalah seorang pengacara dengan pengalaman luas dalam praktik hukum perusahaan. Ia telah berhasil mewakili berbagai perusahaan dalam berbagai transaksi bisnis yang kompleks, restrukturisasi perusahaan, dan perjanjian kerjasama. Dalam penyelesaian sengketa bisnis, Abdian memiliki keahlian dalam arbitrase, mediasi, dan negosiasi. Klien-kliennya sering kali mencari nasihat hukumnya dalam hal hukum persaingan usaha, hak kekayaan intelektual, dan masalah perizinan. Selain berpraktik hukum, Abdian juga aktif sebagai anggota di beberapa organisasi hukum terkemuka seperti Asosiasi Pengacara Indonesia (API) dan Asosiasi Hukum Bisnis (AHB). Keahlian dan pemahamannya yang mendalam tentang hukum bisnis membuatnya menjadi pengacara yang sangat dihormati dan diandalkan oleh klien-kliennya. Abdian juga berbagi pengetahuannya dengan menjadi dosen tamu di beberapa perguruan tinggi hukum, memberikan kontribusi berharga kepada mahasiswa dan calon pengacara. Dengan komitmen, keahlian, dan kemampuannya dalam memberikan solusi hukum yang efektif, Abdian Wijaya merupakan pilihan yang tepat bagi perusahaan yang mencari keahlian hukum perusahaan yang komprehensif.</p>
+                            <p>{{ consultation.description }}</p>
                         </div>
                         <div class="tab-pane fade" id="tab-pane-2">
                             <h4 class="mb-3">Additional Information</h4>
-                            <p>Abdian Wijaya, S.H., M.H., adalah seorang pengacara dengan pengalaman luas dalam hukum perusahaan, transaksi bisnis, restrukturisasi, sengketa bisnis, hukum persaingan, dan perizinan. Ia juga aktif dalam organisasi hukum terkemuka dan menjadi dosen tamu. Abdian adalah pilihan terbaik untuk solusi hukum perusahaan yang efektif.</p>
+                            <p>{{ consultation.lawyer.description }}</p>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item px-0">
-                                            Abdian Wijaya adalah seorang pengacara dengan pengalaman lebih dari 12 tahun dalam praktik hukum.
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Abdian memiliki keahlian dalam hukum bisnis, hukum ketenagakerjaan, dan hukum kontrak.
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Ia juga sering memberikan nasihat hukum kepada perusahaan dalam hal kepatuhan hukum dan sengketa bisnis.
-                                        </li>
-                                      </ul> 
-                                </div>
-                                <div class="col-md-6">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item px-0">
-                                            Ia meraih gelar sarjana hukum (S.H.) dari Universitas ABC dan gelar Magister Hukum (M.H.) dari Universitas DEF.
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Kasus hukum yang melibatkan kontrak, gugatan karyawan, perundingan perjanjian bisnis, dan perizinan usaha.
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Abdian dikenal sebagai pengacara yang berdedikasi, teliti, dan memiliki kemampuan negosiasi yang baik
-                                        </li>
-                                      </ul> 
-                                </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="tab-pane-3">
@@ -139,37 +104,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <h4 class="mb-4">Leave a review</h4>
-                                    <small>Your email address will not be published. Required fields are marked *</small>
-                                    <div class="d-flex my-3">
-                                        <p class="mb-0 mr-2">Your Rating * :</p>
-                                        <div class="text-primary">
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="message">Your Review *</label>
-                                            <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="name">Your Name *</label>
-                                            <input type="text" class="form-control" id="name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Your Email *</label>
-                                            <input type="email" class="form-control" id="email">
-                                        </div>
-                                        <div class="form-group mb-0">
-                                            <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
-                                        </div>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -178,4 +112,67 @@
         </div>
     </div>
     <!-- Shop Detail End -->
+
+    <script>
+        const typeSelect = document.getElementById('type');
+        const durationSelect = document.getElementById('duration');
+        const priceContainer = document.getElementById('price-container');
+        const bookButton = document.getElementById('book-btn');
+
+        typeSelect.addEventListener('change', (event) => {
+            const selectedType = typeSelect.value;
+            if (selectedType) {
+                durationSelect.disabled = false;
+
+                // Hapus semua opsi durasi yang ada
+                while (durationSelect.options.length > 1) {
+                    durationSelect.remove(1);
+                }
+
+                // Tambahkan opsi durasi sesuai dengan tipe yang dipilih
+                const durations = {{ options|safe }}[selectedType];
+                for (const duration of durations) {
+                    const option = document.createElement('option');
+                    option.value = duration;
+                    option.text = duration + ' Minutes';
+                    durationSelect.add(option);
+                }
+            } else {
+                durationSelect.disabled = true;
+                priceContainer.textContent = '';
+            }
+
+            durationSelect.selectedIndex = 0;
+            priceContainer.textContent = '';
+            bookButton.disabled = true;
+        });
+
+        durationSelect.addEventListener('change', (event) => {
+            const selectedType = typeSelect.value;
+            const selectedDuration = durationSelect.value;
+
+            if (selectedType && selectedDuration) {
+                const formData = new FormData();
+                formData.append('type', selectedType);
+                formData.append('duration', selectedDuration);
+
+                fetch('/get_variation_price/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: formData,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        priceContainer.textContent = 'Rp ' + data.price;
+                        bookButton.disabled = false;
+                    });
+            } else {
+                priceContainer.textContent = '';
+                bookButton.disabled = true;
+            }
+        });
+    </script>
 {% endblock  %}
+
