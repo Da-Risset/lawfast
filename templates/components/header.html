@@ -12,31 +12,22 @@
         </div>
         <div class="col-lg-6 text-center text-lg-right">
             <div class="d-inline-flex align-items-center">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
+                <div class="btn-group mx2">
+                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Account</button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="halaman_akun.html">Akun</a><br>
-                        <a href="login.html">Login</a>
-                        <br>
-                        <a href="register.html">Register</a>
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url "account:profile" %}" class="dropdown-item" type="button">Profile</a>
+                        <a href="{% url "order:order-list" %}" class="dropdown-item" type="button">Order History</a>
+                        <a href="{% url "account:password-change" %}" class="dropdown-item" type="button">Change Password</a>
+                        <a href="{% url "account:logout" %}" class="dropdown-item" type="button">Logout</a>
+                        {% else %}
+                        <a href="{% url "account:login" %}" class="dropdown-item" type="button">Login</a>
+                        <a href="{% url "account:password-reset" %}" class="dropdown-item" type="button">Reset Password</a>
+                        <a href="{% url "account:register" %}" class="dropdown-item" type="button">Register</a>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="btn-group mx-2">
-                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">USD</button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <button class="dropdown-item" type="button">EUR</button>
-                        <button class="dropdown-item" type="button">GBP</button>
-                        <button class="dropdown-item" type="button">CAD</button>
-                    </div>
-                </div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">EN</button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <button class="dropdown-item" type="button">FR</button>
-                        <button class="dropdown-item" type="button">AR</button>
-                        <button class="dropdown-item" type="button">RU</button>
-                    </div>
-                </div>
+
             </div>
             <div class="d-inline-flex align-items-center d-block d-lg-none">
                 <a href="" class="btn px-0 ml-2">

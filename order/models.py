@@ -15,7 +15,10 @@ class Order(models.Model):
     )
     lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE, related_name='orders')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    address = models.ForeignKey('account.Address', on_delete=models.CASCADE, related_name='orders', null=True, blank=True)
     consultation = models.ForeignKey(Consultation, on_delete=models.CASCADE, related_name='orders')
+    variation_type = models.CharField(max_length=10, null=True, blank=True)
+    variation_duration = models.PositiveIntegerField(null=True, blank=True)
     document = models.ForeignKey(Document, on_delete=models.CASCADE, related_name='orders', null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
 
@@ -24,6 +27,11 @@ class Order(models.Model):
 
     def __str__(self):
         return self.status
+
+    def get_price(self):
+        consultation = Consultation.objects.get(pk=self.consultation.pk)
+        variation = consultation.variations.get(type=self.variation_type, duration=self.variation_duration)
+        return variation.price
 
 
 class Cart(models.Model):

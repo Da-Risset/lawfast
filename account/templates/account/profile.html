@@ -1,91 +1,84 @@
+{% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Profile</title>
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-</head>
-<body>
-	<section class="py-5 my-5">
-		<div class="container">
-			<h1 class="mb-5">Account Settings</h1>
-			<div class="bg-white shadow rounded-lg d-block d-sm-flex">
-				<div class="profile-tab-nav border-right">
-					<div class="p-4">
-						<div class="img-circle text-center mb-3">
-							<img src="{% static '' %}" alt="Image" class="shadow">
-						</div>
-						<h4 class="text-center">Kiran Acharya</h4>
-					</div>
-					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-						<a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected="true">
-							<i class="fa fa-home text-center mr-1"></i> 
-							Account
-						</a>
-                        <a class="nav-link" id="address-tab" data-toggle="pill" href="#security" role="tab" aria-controls="address" aria-selected="false">
-							<i class="fa fa-address-book"></i>  
-							Address
-						</a>
-						<a class="nav-link" id="history-tab" data-toggle="pill" href="#password" role="tab" aria-controls="history" aria-selected="false">
-							<i class="fa fa-history"></i>
-							History
-						</a>
-						<a class="nav-link" id="logout-tab" data-toggle="pill" href="#password" role="tab" aria-controls="logout" aria-selected="false">
-							<i class="fa fa-sign-out"></i>
-							Logout
-						</a>
-					</div>
-				</div>
-				<div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
-					<div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-						<h3 class="mb-4">Account Settings</h3>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>User</label>
-									<input type="text" class="form-control" value="Name">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Address</label>
-									<input type="text" class="form-control" value="Address">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>City</label>
-									<input type="text" class="form-control" value="Your City">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>State</label>
-									<input type="text" class="form-control" value="Your Country">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Pincode</label>
-									<input type="text" class="form-control" value="Pincode">
-								</div>
-							</div>
-						</div>
-						<div>
-							<button class="btn btn-primary">Update</button>
-							<button class="btn btn-light">Cancel</button>
-						</div>
-					</div>
-				</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-</body>
-</html>
+
+{% block content %}
+    <!-- Cart Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5 justify-content-center">
+            <div class="col-lg-8 table-responsive p-30 mb-5 bg-light">
+                <h5 class="section-title position-relative text-uppercase"><span class="bg-secondary pr-3">Address</span></h5>
+                <div class="bg-light p-30 mb-5">
+                    {% if address %}
+                        <div >
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6 class="mr-5">Address:</h6>
+                                <h6>{{ address.address }}</h6>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6 class="font-weight-medium mr-5">City / Postal Code:</h6>
+                                <h6 class="font-weight-medium">{{ address.city }} {{ address.pincode }}</h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium m4-5">State:</h6>
+                                <h6 class="font-weight-medium">{{ address.state }}</h6>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="pd-3">
+                            <a href="{% url "account:add-address" %}" class="btn btn-primary btn-block ">Add Address</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-lg-8 table-responsive p-30 mb-5 bg-light">
+                {% if orders %}
+
+                    <table class="table table-light table-borderless table-hover text-center mb-0">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Lawyer</th>
+                            <th>Subject</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody class="align-middle">
+                        {% if orders %}
+                            <h5 class="section-title position-relative text-uppercase"><span class="bg-secondary pr-3">Orders</span></h5>
+                            {% for order in orders %}
+                                <tr>
+                                    <td class="align-middle">{{ order.user.username }}</td>
+                                    <td class="align-middle">{{ order.consultation.lawyer.name }}</td>
+                                    {% if order.document %}
+                                        <td class="align-middle">Pembuatan Dokumen</td>
+                                    {% else %}
+                                        <td class="align-middle">Konsultasi</td>
+                                    {% endif %}
+                                    <td class="align-middle">{{ order.status }}</td>
+                                    <td class="align-middle">Rp {{ order.get_price }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="align-middle">No data</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+
+                {% else %}
+                    <div class="pd-3">
+                        <h3>No Order Found.</h3>
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+    <!-- Cart End -->
+
+{% endblock %}
+

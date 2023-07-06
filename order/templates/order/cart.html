@@ -1,87 +1,107 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<!-- Cart Start -->
-<div class="container-fluid">
-    <div class="row px-xl-5">
-        <div class="col-lg-8 table-responsive mb-5">
-            <table class="table table-light table-borderless table-hover text-center mb-0">
-                <thead class="thead-dark">
+    <!-- Cart Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <div class="col-lg-8 table-responsive mb-5">
+                <table class="table table-light table-borderless table-hover text-center mb-0">
+                    <thead class="thead-dark">
                     <tr>
                         <th>Lawyer</th>
                         <th>Type</th>
                         <th>Duration</th>
                         <th>Total</th>
                     </tr>
-                </thead>
-                <tbody class="align-middle">
-                {% for item in cart_items %}
-                    <tr>
-                        <td class="align-middle">{{ item.consultation.lawyer.name }}</td>
-                        <td class="align-middle">{{ item.variation_type }}</td>
-                        <td class="align-middle">{{ item.variation_duration }} Menit</td>
-                        
-                        <td class="align-middle">{{ item.get_price }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="col-lg-4">
-            <form class="mb-30" action="">
-                <div class="input-group">
-                    <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary">Apply Coupon</button>
-                    </div>
-                </div>
-            </form>
-            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span></h5>
-            <div class="bg-light p-30 mb-5">
-                <div class="border-bottom pb-2">
-                    <div class="d-flex justify-content-between mb-3">
-                        <h6>Subtotal</h6>
-                        <h6>Rp {{ total_price }}</h6>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Shipping</h6>
-                        <h6 class="font-weight-medium">Rp 0</h6>
-                    </div>
-                </div>
-                <div class="pt-2">
-                    <div class="d-flex justify-content-between mt-2">
-                        <h5>Total</h5>
-                        <h5>Rp {{ total_price }}</h5>
-                    </div>
-                    <a href="checkout.html" class="btn btn-primary btn-block mt-3">Pay</a>
-                </div>
+                    </thead>
+                    <tbody class="align-middle">
+                    {% for item in cart_items %}
+                        <tr>
+                            <td class="align-middle">{{ item.consultation.lawyer.name }}</td>
+                            <td class="align-middle">{{ item.variation_type }}</td>
+                            <td class="align-middle">{{ item.variation_duration }} Menit</td>
+
+                            <td class="align-middle">{{ item.get_price }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                {#                <div class="bg-light mt-5 mb-5">#}
+                {##}
+                {#                    <div class="pd-3">#}
+                {#                        <a href="{% url "order:checkout" %}" class="btn btn-info btn-block ">Process to Checkout</a>#}
+                {#                    </div>#}
+                {#                </div>#}
             </div>
-            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Address</span></h5>
-            <div class="bg-light p-30 mb-5">
-                {% if address %}
-                    <div >
-                        <div class="d-flex justify-content-between mb-2">
-                            <h6>Address</h6>
-                            <h6>{{ address.address }}</h6>
+            <div class="col-lg-4">
+
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Address</span></h5>
+                <div class="bg-light p-30 mb-5">
+                    {% if address %}
+                        <div >
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6 class="mr-5">Address: </h6>
+                                <h6>{{ address.address }}</h6>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6 class="font-weight-medium mr-5">City/Code: </h6>
+                                <h6 class="font-weight-medium">{{ address.city }} {{ address.pincode }}</h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium mr-5">State: </h6>
+                                <h6 class="font-weight-medium">{{ address.state }}</h6>
+                            </div>
                         </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <h6 class="font-weight-medium">City / Postal Code</h6>
-                            <h6 class="font-weight-medium">{{ address.city }} {{ address.pincode }}</h6>
+                    {% else %}
+                        <div class="pd-3">
+                            <a href="" class="btn btn-primary btn-block ">Add Address</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span></h5>
+                <div class="bg-light p-30 mb-5">
+                    <div class="border-bottom pb-2">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h6>Subtotal</h6>
+                            <h6>Rp {{ total_price }}</h6>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">State</h6>
-                            <h6 class="font-weight-medium">{{ address.state }}</h6>
+                            <h6 class="font-weight-medium">Shipping</h6>
+                            <h6 class="font-weight-medium">Rp 0</h6>
                         </div>
                     </div>
-                    {% else %}
-                    <div class="pd-3">
-                        <a href="" class="btn btn-primary btn-block ">Add Address</a>
+                    <div class="pt-2">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5>Total</h5>
+                            <h5>Rp {{ total_price }}</h5>
+                        </div>
+                        <form method="post" action="{% url "order:checkout" %}">
+                            {% csrf_token %}
+                            {% if address %}
+                                <input type="hidden" name="address" value="{{ address.id }}">
+                            {% endif %}
+
+                            <button id="pay-btn" type="submit" class="btn btn-primary btn-block mt-3">Pay</button>
+                        </form>
+
                     </div>
-                {% endif %}
+
+                </div>
+
             </div>
         </div>
     </div>
-</div>
-<!-- Cart End -->
+    <!-- Cart End -->
+
+    <script>
+        const addressInput = document.querySelector('input[name="address"]');
+        const payButton = document.getElementById('pay-btn');
+
+        if (!addressInput) {
+            payButton.disabled = true;
+        }
+    </script>
 
 {% endblock %}

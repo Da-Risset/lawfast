@@ -32,7 +32,7 @@ class LoginForm(AuthenticationForm):
                                widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
 
 
-class AddressForm(forms.Form):
+class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
         fields = ['address', 'city', 'state', 'pincode']
