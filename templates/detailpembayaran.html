@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Checkout Start -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-lg-8">
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Payment Details</span></h5>
+            <div class="bg-light p-30 mb-5">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>Name</label>
+                        <input class="form-control" type="text" value="Budi" readonly>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Lawyer</label>
+                        <input class="form-control" type="text" value="Daniel Williams, S.H." readonly>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Type</label>
+                        <input class="form-control" type="text" value="Chat" readonly>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Duration</label>
+                        <input class="form-control" type="text" value="15 menit" readonly>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Total</label>
+                        <input class="form-control" type="text" value="Rp. 100.000" readonly>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+</div>
+<!-- Checkout End -->
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+{% endblock %}
+    
+
