@@ -1,8 +1,18 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.views import View
+from .forms import RegistrationForm
 
 
 class RegistrationView(View):
     def get(self, request):
-        pass
+        form = RegistrationForm()
+        return render(request, 'account/register.html', {'form': form})
+
+    def post(self, request):
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            messages.success(request, 'Account created successfully')
+            form.save()
+            return redirect('login')
+        return render(request, 'account/register.html', {'form': form})
