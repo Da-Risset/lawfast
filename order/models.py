@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from consultation.models import Lawyer, Consultation
+
+from consultation.models import Consultation
 from document.models import Document
 
 
@@ -22,6 +24,23 @@ class Order(models.Model):
 
     def __str__(self):
         return self.status
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='carts')
+    consultation = models.ForeignKey(Consultation, on_delete=models.CASCADE, related_name='carts')
+    variation_type = models.CharField(max_length=10)
+    variation_duration = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Updated date')
+
+    def __str__(self):
+        return f"Cart {self.pk} - User: {self.user.username}"
+
+    def get_price(self):
+        consultation = Consultation.objects.get(pk=self.consultation.pk)
+        variation = consultation.variations.get(type=self.variation_type, duration=self.variation_duration)
+        return variation.price
 
 
 class Payment(models.Model):
