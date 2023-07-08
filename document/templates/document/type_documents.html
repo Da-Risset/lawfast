@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+     <!-- Categories Start -->
+	<div class="container-fluid pt-5">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categories</span></h2>
+        <div class="row px-xl-5 pb-3">
+            {% for td in type_documents %}
+            <div class="col-lg-3 col-md-3 col-sm-5 pb-1">
+                <a class="text-decoration-none" href="">
+                    <div class=" product-offer mb-30">
+                        <div class="overflow-hidden mb-30" style=" height: 200px;">
+                            <img class="img-fluid" src="{% static 'img/somasi.png' %}" alt="">
+                        </div>
+                        <div class="offer-text">
+                        <h3 class="text-white mb-3">{{ td.name }}</h3>
+						<a href="{% url "document:lawyer-list" td.id %}" class="btn btn-primary">Order Now</a>
+                    </div>
+                    </div>
+                </a>
+            </div>
+			{% endfor %}
+        </div>
+    </div>
+    <!-- Categories End -->
+{% endblock %}
+```

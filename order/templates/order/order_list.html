@@ -21,7 +21,11 @@
                         {% for order in orders %}
                             <tr>
                                 <td class="align-middle">{{ order.user.username }}</td>
+                                {% if order.consultation %}
                                 <td class="align-middle">{{ order.consultation.lawyer.name }}</td>
+                                {% else %}
+                                <td class="align-middle">{{ order.document.lawyer.name }}</td>
+                                {% endif %}
                                 {% if order.document %}
                                 <td class="align-middle">Pembuatan Dokumen</td>
                                 {% else %}

@@ -11,6 +11,7 @@ class CartView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         cart_items = Cart.objects.filter(user=user)
+
         total_price = sum(cart_item.get_price() for cart_item in cart_items)
         address = user.addresses.first()
 
@@ -29,15 +30,24 @@ class CheckoutView(LoginRequiredMixin, View):
         address = user.addresses.get(id=address_id)
         cart_items = Cart.objects.filter(user=user)
         for cart_item in cart_items:
-            order = Order.objects.create(
-                lawyer=cart_item.consultation.lawyer,
-                user=user,
-                address=address,
-                consultation=cart_item.consultation,
-                variation_type=cart_item.variation_type,
-                variation_duration=cart_item.variation_duration,
-                status='Pending',
-            )
+            if cart_item.consultation:
+                order = Order.objects.create(
+                    lawyer=cart_item.consultation.lawyer,
+                    user=user,
+                    address=address,
+                    consultation=cart_item.consultation,
+                    variation_type=cart_item.variation_type,
+                    variation_duration=cart_item.variation_duration,
+                    status='Pending',
+                )
+            else:
+                order = Order.objects.create(
+                    lawyer=cart_item.document.lawyer,
+                    user=user,
+                    address=address,
+                    document=cart_item.document,
+                    status='Pending',
+                )
             cart_item.delete()
             order.save()
         return redirect('order:order-list')

@@ -16,7 +16,7 @@ class Order(models.Model):
     lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE, related_name='orders')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     address = models.ForeignKey('account.Address', on_delete=models.CASCADE, related_name='orders', null=True, blank=True)
-    consultation = models.ForeignKey(Consultation, on_delete=models.CASCADE, related_name='orders')
+    consultation = models.ForeignKey(Consultation, on_delete=models.CASCADE, related_name='orders', null=True, blank=True)
     variation_type = models.CharField(max_length=10, null=True, blank=True)
     variation_duration = models.PositiveIntegerField(null=True, blank=True)
     document = models.ForeignKey(Document, on_delete=models.CASCADE, related_name='orders', null=True, blank=True)
@@ -29,16 +29,20 @@ class Order(models.Model):
         return self.status
 
     def get_price(self):
-        consultation = Consultation.objects.get(pk=self.consultation.pk)
-        variation = consultation.variations.get(type=self.variation_type, duration=self.variation_duration)
-        return variation.price
+        if self.consultation:
+            consultation = Consultation.objects.get(pk=self.consultation.pk)
+            variation = consultation.variations.get(type=self.variation_type, duration=self.variation_duration)
+            return variation.price
+        else:
+            return self.document.price
 
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='carts')
-    consultation = models.ForeignKey(Consultation, on_delete=models.CASCADE, related_name='carts')
-    variation_type = models.CharField(max_length=10)
-    variation_duration = models.PositiveIntegerField()
+    consultation = models.ForeignKey(Consultation, on_delete=models.CASCADE, related_name='carts', null=True, blank=True)
+    variation_type = models.CharField(max_length=10, null=True, blank=True)
+    variation_duration = models.PositiveIntegerField(blank=True, null=True)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE, related_name='carts', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Updated date')
 
@@ -46,9 +50,13 @@ class Cart(models.Model):
         return f"Cart {self.pk} - User: {self.user.username}"
 
     def get_price(self):
-        consultation = Consultation.objects.get(pk=self.consultation.pk)
-        variation = consultation.variations.get(type=self.variation_type, duration=self.variation_duration)
-        return variation.price
+        if self.consultation:
+            consultation = Consultation.objects.get(pk=self.consultation.pk)
+            variation = consultation.variations.get(type=self.variation_type, duration=self.variation_duration)
+            return variation.price
+        elif self.document:
+            return self.document.price
+
 
 
 class Payment(models.Model):

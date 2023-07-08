@@ -18,7 +18,7 @@
                             <div class="p-3" style="max-width: 700px;">
                                 <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">SOMASI</h1>
                                 <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Konsultasi Hukum Masa Kini</p>
-                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="shop.html">Order Now</a>
+                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="{% url "consultation:consultation-list" %}">Order Now</a>
                             </div>
                         </div>
                     </div>
@@ -104,21 +104,9 @@
 <div class="container-fluid pt-5">
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"></h2>
     <div class="row px-xl-5 pb-3">
+
         <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-            <a class="text-decoration-none" href="">
-                <div class="cat-item d-flex align-items-center mb-4">
-                    <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                        <img class="img-fluid" src="{% static 'img/janjitemu.png' %}" alt="">
-                    </div>
-                    <div class="flex-fill pl-3">
-                        <h6>Janji Temu Pengacara</h6>
-                        
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-            <a class="text-decoration-none" href="shop.html">
+            <a class="text-decoration-none" href="{% url "consultation:consultation-list" %}">
                 <div class="cat-item img-zoom d-flex align-items-center mb-4">
                     <div class="overflow-hidden" style="width: 100px; height: 100px;">
                         <img class="img-fluid" src="{% static 'img/konhuk.png' %}" alt="">
@@ -130,7 +118,7 @@
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-            <a class="text-decoration-none" href="dokumen.html">
+            <a class="text-decoration-none" href="{% url "document:document-list" %}">
                 <div class="cat-item img-zoom d-flex align-items-center mb-4">
                     <div class="overflow-hidden" style="width: 100px; height: 100px;">
                         <img class="img-fluid" src="{% static 'img/buatdok.png' %}" alt="">
@@ -142,7 +130,7 @@
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-            <a class="text-decoration-none" href="veri.html">
+            <a class="text-decoration-none" href="{% url "document:document-list" %}">
                 <div class="cat-item img-zoom d-flex align-items-center mb-4">
                     <div class="overflow-hidden" style="width: 100px; height: 100px;">
                         <img class="img-fluid" src="{% static 'img/veridok.png' %}" alt="">
@@ -165,19 +153,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-            <a class="text-decoration-none" href="">
-                <div class="cat-item img-zoom d-flex align-items-center mb-4">
-                    <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                        <img class="img-fluid" src="{% static 'img/lain.png' %}" alt="">
-                    </div>
-                    <div class="flex-fill pl-3">
-                        <h6>Lihat Semua</h6>
-                    </div>
-                </div>
-            </a>
-        </div>
-        
+
     </div>
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"></h2>
 </div>

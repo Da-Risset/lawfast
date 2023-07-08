@@ -17,9 +17,23 @@
                     <tbody class="align-middle">
                     {% for item in cart_items %}
                         <tr>
-                            <td class="align-middle">{{ item.consultation.lawyer.name }}</td>
-                            <td class="align-middle">{{ item.variation_type }}</td>
-                            <td class="align-middle">{{ item.variation_duration }} Menit</td>
+                            {% if item.document %}
+                                <td class="align-middle">{{ item.document.lawyer.name }}</td>
+                            {% else %}
+                                <td class="align-middle">{{ item.consultation.lawyer.name }}</td>
+                            {% endif %}
+                            {% if item.document %}
+                                <td class="align-middle">{{ item.document.type.name }}</td>
+                            {% else %}
+                                <td class="align-middle">{{ item.variation_type }}</td>
+                            {% endif %}
+
+                            {% if item.document %}
+                                <td class="align-middle">{{ item.document }} </td>
+                            {% else %}
+                                <td class="align-middle">{{ item.consultation.duration }} Menit</td>
+                            {% endif %}
+
 
                             <td class="align-middle">{{ item.get_price }}</td>
                         </tr>
